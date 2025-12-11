@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AeroTokmok — Авиабаза в Токмоке</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="script" href="script.js">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">Aero<span>Tokmok</span></div>
+    <nav class="nav">
+      <a href="#about">Проект</a>
+      <a href="#steps">Как получить технику</a>
+      <a href="#costs">Затраты</a>
+      <a href="#contact" class="cta">Связаться</a>
+    </nav>
+    <button class="burger" aria-label="меню" id="burgerBtn">☰</button>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" role="banner" id="home">
+      <div class="hero-inner">
+        <h1>Авиабаза в Токмоке</h1>
+        <p class="lead">Покупаем самолёты и вертолёты в США → растамаживаем в КР → сдаём в аренду региональным клиентам.</p>
+        <div class="pills">
+        </div>
+        <div class="hero-actions">
+          <a class="btn" href="#steps">Что делать</a>
+          <a class="btn ghost" href="#contact">Запрос инвестиций</a>
+        </div>
+      </div>
+      <div class="hero-image" aria-hidden="true"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section container">
+      <h2 class="section-title">Коротко о проекте</h2>
+      <p class="center">Создаём локальную базу (ангар, сервис, склад запчастей) в Токмоке. Импортируем технику из США, оформляем на ГААК и сдаём в аренду компаниям в Центральной Азии.</p>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-badge">1</div>
+          <h3>Преимущества</h3>
+          <ul>
+            <li>Нехватка малой авиации в регионе</li>
+            <li>Локальный сервис — меньше простоя</li>
+            <li>Гибкие модели аренды (wet/dry)</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-badge">2</div>
+          <h3>Клиенты</h3>
+          <p>Нефтегаз, горнодобыча, медицинские службы, туристические операторы, госструктуры.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-badge">3</div>
+          <h3>Старт</h3>
+          <p>Начать можно с 1 вертолёта + ангар, затем масштабировать парк.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section id="steps" class="section alt">
+      <div class="container">
+        <h2 class="section-title">Как получить технику — шаги</h2>
+
+        <ol class="steps">
+          <li>
+            <strong>Найти технику в США</strong>
+            <p>Связаться с авиа-брокером, запросить logbooks и фото.</p>
+          </li>
+          <li>
+            <strong>Проверка (Pre-buy inspection)</strong>
+            <p>Закажите MRO-инспекцию — проверка двигателей, AD/SB, состояние лётной техники.</p>
+          </li>
+          <li>
+            <strong>Договор и инвойс</strong>
+            <p>Подпишите куплю-продажу; получите инвойс (invoice) для таможни.</p>
+          </li>
+          <li>
+            <strong>Доставка и растаможка</strong>
+            <p>Доставка до порта → декларация в ГТС → оплата пошлин/НДС → таможенный выпуск.</p>
+          </li>
+          <li>
+            <strong>Регистрация и сертификация</strong>
+            <p>Регистрируете ВС в реестре ГААК, получаете летную годность для эксплуатации.</p>
+          </li>
+          <li>
+            <strong>Сервис и сдача в аренду</strong>
+            <p>Организация ТО, кадры, страхование — и вперёд на рынок аренды.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- COSTS -->
+    <section id="costs" class="section">
+      <div class="container">
+        <h2 class="section-title">Основные затраты (оценочно)</h2>
+
+        <div class="grid-2">
+          <div class="card small">
+            <h4>Земля и ангар</h4>
+            <p>Земля (прибл.) — $10k–15k/га; ангар и инфраструктура — $100k–400k в зависимости от размера.</p>
+          </div>
+
+          <div class="card small">
+            <h4>Техника</h4>
+            <p>Подержанный лёгкий вертолёт — от $300k; серьёзный вертолёт/джет — от $1M+</p>
+          </div>
+
+          <div class="card small">
+            <h4>Операционные</h4>
+            <p>Персонал, ТО, страхование, топливо — планируйте годовой буфер.</p>
+          </div>
+
+          <div class="card small">
+            <h4>Итого старт</h4>
+            <p>Минимум ~ $700k — $2M в зависимости от набора техники.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ / Glossary -->
+    <section id="gloss" class="section alt">
+      <div class="container">
+        <h2 class="section-title">Краткий словарь (аббревиатуры)</h2>
+        <div class="glossary">
+          <dl>
+            <dt>ГААК</dt><dd>— Государственная авиационная администрация Кыргызстана</dd>
+            <dt>ГТС</dt><dd>— Государственная таможенная служба</dd>
+            <dt>ИНВОЙС</dt><dd>— Счёт-фактура (invoice) от продавца</dd>
+            <dt>AOC</dt><dd>— Air Operator Certificate (сертификат оператора)</dd>
+            <dt>OSOO / ОсОО</dt><dd>— Общество с ограниченной ответственностью (юр.форма)</dd>
+            <dt>НДС</dt><dd>— Налог на добавленную стоимость</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title">Связаться / заявка</h2>
+        <p class="center">Заполни форму — данные не отправляются (front-end demo). Это шаблон для презентации.</p>
+
+        <form id="demoForm" class="form">
+          <div class="row">
+            <input type="text" id="name" placeholder="Имя" required />
+            <input type="email" id="email" placeholder="Email" required />
+          </div>
+          <textarea id="message" rows="5" placeholder="Кратко: что вам нужно"></textarea>
+          <div class="form-actions">
+            <button type="submit" class="btn">Отправить (демо)</button>
+            <button type="button" class="btn ghost" id="downloadBtn">Скачать PPTX (шаблон)</button>
+          </div>
+          <div id="formResult" class="result" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container small">© AeroTokmok — демо-проект. Сделано для презентации. Все данные — ориентировочные.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
