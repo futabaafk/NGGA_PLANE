@@ -59,3 +59,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }, {threshold: 0.12});
   cards.forEach(c => obs.observe(c));
 });
+
+
+
+
+// Calculator Logic
+  const calcBtn = document.getElementById('calcBtn');
+  if(calcBtn) {
+    calcBtn.addEventListener('click', () => {
+      const price = parseFloat(document.getElementById('usPrice').value) || 0;
+      const shipping = 15000; // Примерная фиксированная доставка
+      const vat = (price + shipping) * 0.12; // 12% НДС от суммы с доставкой
+      const total = price + shipping + vat;
+
+      document.getElementById('shippingVal').textContent = '$' + shipping.toLocaleString();
+      document.getElementById('vatVal').textContent = '$' + Math.round(vat).toLocaleString();
+      document.getElementById('totalVal').textContent = '$' + Math.round(total).toLocaleString();
+    });
+  }
+
+
+
+  const scoreEl = document.getElementById('scoreVal');
+
+ 

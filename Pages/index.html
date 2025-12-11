@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AeroTokmok — Авиабаза в Токмоке</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="script" href="script.js">
+ <link rel="stylesheet" href="../styles/style.css" />
+  <script src="../script.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <div class="logo">Aero<span>Tokmok</span></div>
+    <a href="game.html" class="logo" title="Секретная игра">Aero<span>Tokmok</span></a>
     <nav class="nav">
       <a href="#about">Проект</a>
       <a href="#steps">Как получить технику</a>
@@ -42,7 +42,7 @@
 
       <div class="cards">
         <article class="card">
-          <div class="card-badge">1</div>
+      
           <h3>Преимущества</h3>
           <ul>
             <li>Нехватка малой авиации в регионе</li>
@@ -52,13 +52,13 @@
         </article>
 
         <article class="card">
-          <div class="card-badge">2</div>
+          
           <h3>Клиенты</h3>
           <p>Нефтегаз, горнодобыча, медицинские службы, туристические операторы, госструктуры.</p>
         </article>
 
         <article class="card">
-          <div class="card-badge">3</div>
+          
           <h3>Старт</h3>
           <p>Начать можно с 1 вертолёта + ангар, затем масштабировать парк.</p>
         </article>
@@ -124,6 +124,88 @@
             <h4>Итого старт</h4>
             <p>Минимум ~ $700k — $2M в зависимости от набора техники.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ex -->
+    <section id="fleet" class="section">
+      <div class="container">
+        <h2 class="section-title">Примеры техники</h2>
+        <p class="center" style="margin-bottom: 30px;">Модели, которые идеально подходят для условий Кыргызстана.</p>
+
+        <div class="fleet-grid">
+          <article class="fleet-card">
+            <div class="fleet-img" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/ae/Cessna_172S_Skyhawk_SP%2C_Private_JP6817606.jpg');"></div>
+            <div class="fleet-content">
+              <h3>Cessna 172 Skyhawk</h3>
+              <div class="specs">
+                <span>👤 4 места</span>
+                <span>✈️ 230 км/ч</span>
+              </div>
+              <p>Самый массовый самолет. Идеален для обучения и патрулирования.</p>
+              <div class="price-tag">От $180k (б/у)</div>
+            </div>
+          </article>
+
+          <article class="fleet-card">
+            <div class="fleet-img" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/d5/Robinson_R44_II_%28cropped%29.jpg');"></div>
+            <div class="fleet-content">
+              <h3>Robinson R44</h3>
+              <div class="specs">
+                <span>👤 4 места</span>
+                <span>🚁 200 км/ч</span>
+              </div>
+              <p>Рабочая лошадка. Хели-ски, геология, VIP-перевозки.</p>
+              <div class="price-tag">От $350k (б/у)</div>
+            </div>
+          </article>
+
+          <article class="fleet-card">
+            <div class="fleet-img" style="background-image: url('https://corporatehelicopters.com/wp-content/uploads/3e.jpg');"></div>
+            <div class="fleet-content">
+              <h3>Airbus H125</h3>
+              <div class="specs">
+                <span>👤 6 мест</span>
+                <span>🚁 287 км/ч</span>
+              </div>
+              <p>Король высокогорья. Единственный вертолет, севший на Эверест.</p>
+              <div class="price-tag">От $1.8M (б/у)</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+<!-- calculator -->
+    <section id="costs" class="section">
+      <div class="container">
+        <h2 class="section-title">Калькулятор импорта</h2>
+        <p class="center">Примерный расчет стоимости техники "под ключ" в Кыргызстане.</p>
+
+        <div class="calc-box">
+          <div class="calc-row">
+            <label>Цена в США ($):</label>
+            <input type="number" id="usPrice" placeholder="Например: 300000" />
+          </div>
+          
+          <div class="calc-results">
+            <div class="calc-item">
+              <span>Доставка (эстимейт):</span>
+              <span id="shippingVal">$15,000</span>
+            </div>
+            <div class="calc-item">
+              <span>НДС (12%):</span>
+              <span id="vatVal">$0</span>
+            </div>
+            <div class="calc-total">
+              <span>Итого в Токмоке:</span>
+              <strong id="totalVal">$0</strong>
+            </div>
+          </div>
+          
+          <button type="button" id="calcBtn" class="btn full-width">Рассчитать</button>
         </div>
       </div>
     </section>

@@ -25,7 +25,20 @@ body{
 .nav{display:flex;gap:18px;align-items:center}
 .nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .18s}
 .nav a:hover{color:#fff;background:rgba(76,201,240,0.06)}
-.cta{background:linear-gradient(90deg,var(--accent),#1e9fc0);color:#03223a;font-weight:600;padding:8px 14px;border-radius:10px}
+.cta {
+  background: transparent; /* Без фона */
+  border: 0;               /* Без рамки */
+  color: var(--accent);    /* Голубой текст */
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  transition: color 0.2s;
+}
+
+.cta:hover {
+  color: #fff;             /* Белый цвет при наведении */
+  background: transparent;
+}
 .burger{display:none;background:none;border:0;color:#fff;font-size:22px}
 
 /* HERO */
@@ -93,4 +106,102 @@ body{
 }
 @media (max-width:560px){
   .form .row{flex-direction:column}
+}
+
+
+
+/* --- FLEET SECTION --- */
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.fleet-card {
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.fleet-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+
+.fleet-img {
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.fleet-content {
+  padding: 20px;
+}
+
+.fleet-content h3 {
+  margin: 0 0 10px 0;
+  color: #fff;
+  font-size: 20px;
+}
+
+.specs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.price-tag {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+
+/* --- CALCULATOR STYLES --- */
+.calc-box {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--card);
+  padding: 30px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.calc-row { margin-bottom: 20px; }
+.calc-row label { display: block; margin-bottom: 8px; color: var(--muted); }
+.calc-row input {
+  width: 100%; padding: 14px; border-radius: 10px;
+  background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+  color: #fff; font-size: 18px; outline: none;
+}
+.calc-results {
+  background: rgba(255,255,255,0.02);
+  padding: 20px; border-radius: 10px; margin-bottom: 20px;
+}
+.calc-item { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--muted); font-size: 14px; }
+.calc-total {
+  display: flex; justify-content: space-between; margin-top: 15px;
+  padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 18px; color: #fff;
+}
+.btn.full-width { width: 100%; text-align: center; }
+
+
+
+a.logo {
+  text-decoration: none;
+  color: #fff; /* или var(--muted) */
 }

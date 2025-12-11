@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AeroTokmok — Secret Flight</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0d12;
+      color: #fff;
+      font-family: sans-serif;
+      overflow: hidden; /* Чтобы не было скролла */
+      touch-action: none; /* Отключаем зум на мобилках */
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(180deg, #1e9fc0 0%, #0b0d12 80%);
+    }
+    #ui {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    h1 {
+      font-size: 40px;
+      margin: 0 0 10px;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    p {
+      font-size: 18px;
+      opacity: 0.8;
+    }
+    .score-board {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 5;
+    }
+    .btn-back {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 20;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="btn-back">← На сайт</a>
+  <div class="score-board">Счет: <span id="scoreVal">0</span></div>
+
+  <div id="ui">
+    <h1 id="title">AeroTokmok</h1>
+    <p id="subtitle">Нажми Пробел или по Экрану, чтобы взлететь</p>
+  </div>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const uiTitle = document.getElementById('title');
+    const uiSub = document.getElementById('subtitle');
+    const scoreEl = document.getElementById('scoreVal');
+
+    // Настройки
+    let width, height;
+    let frames = 0;
+    let score = 0;
+    let gameState = 'START'; // START, PLAY, GAMEOVER
+    let speed = 3; // Скорость движения
+
+    // Самолетик
+    const plane = {
+      x: 50,
+      y: 150,
+      radius: 12,
+      velocity: 0,
+      gravity: 0.25,
+      jump: 5.6,
+      
+      draw: function() {
+        ctx.fillStyle = '#ffcc00'; // Желтый цвет
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Хвост/крыло (просто для декора)
+        ctx.fillStyle = '#e6b800';
+        ctx.fillRect(this.x - 15, this.y - 2, 10, 4);
+      },
+      
+      update: function() {
+        // Физика
+        this.velocity += this.gravity;
+        this.y += this.velocity;
+
+        // Пол и потолок
+        if (this.y + this.radius >= height) {
+          this.y = height - this.radius;
+          gameOver();
+        }
+        if (this.y - this.radius <= 0) {
+          this.y = this.radius;
+          this.velocity = 0;
+        }
+      },
+      
+      flap: function() {
+        this.velocity = -this.jump;
+      },
+
+      reset: function() {
+        this.y = height / 2;
+        this.velocity = 0;
+      }
+    };
+
+    // Препятствия (Трубы/Горы)
+    const pipes = {
+      position: [],
+      w: 50,
+      h: 150, // минимальная высота окна
+      gap: 160, // расстояние между трубами
+      dx: 3,
+      
+      draw: function() {
+        ctx.fillStyle = '#2c3e50'; // Цвет препятствий
+        for(let i = 0; i < this.position.length; i++) {
+          let p = this.position[i];
+          let topY = p.y;
+          let bottomY = p.y + this.h + p.gap; // начало нижней трубы
+          
+          // Верхняя труба
+          ctx.fillRect(p.x, 0, this.w, topY);
+          
+          // Нижняя труба
+          ctx.fillRect(p.x, topY + this.gap, this.w, height - (topY + this.gap));
+        }
+      },
+      
+      update: function() {
+        // Добавляем новые трубы каждые 100 кадров
+        if(frames % 100 === 0) {
+          // Случайная высота верхней трубы
+          // Максимальная y = height - gap - 50
+          let maxY = height - this.gap - 100;
+          let y = Math.floor(Math.random() * (maxY - 50 + 1) + 50);
+          
+          this.position.push({
+            x: width,
+            y: y,
+            gap: this.gap,
+            passed: false // прошли ли мы эту трубу
+          });
+        }
+        
+        // Двигаем трубы
+        for(let i = 0; i < this.position.length; i++) {
+          let p = this.position[i];
+          p.x -= this.dx;
+
+          // Коллизия (столкновение)
+          // Проверка по X
+          if(plane.x + plane.radius > p.x && plane.x - plane.radius < p.x + this.w) {
+            // Проверка по Y (попали ли в трубу)
+            // Мы в безопасности только если plane.y больше (ниже) верха И меньше (выше) низа
+            if(plane.y - plane.radius < p.y || plane.y + plane.radius > p.y + p.gap) {
+              gameOver();
+            }
+          }
+
+          // Подсчет очков
+          if(p.x + this.w < plane.x && !p.passed) {
+            score++;
+            scoreEl.innerText = score;
+            p.passed = true;
+          }
+
+          // Удаляем старые трубы
+          if(p.x + this.w <= 0) {
+            this.position.shift();
+            score++; // на всякий случай, если проскочили
+            i--;
+          }
+        }
+      },
+
+      reset: function() {
+        this.position = [];
+      }
+    };
+
+    function gameOver() {
+      gameState = 'GAMEOVER';
+      uiTitle.innerText = "Game Over";
+      uiSub.innerText = "Кликни, чтобы начать заново";
+      uiTitle.style.display = 'block';
+      uiSub.style.display = 'block';
+    }
+
+    function resetGame() {
+      plane.reset();
+      pipes.reset();
+      score = 0;
+      frames = 0;
+      scoreEl.innerText = score;
+      gameState = 'START';
+      uiTitle.innerText = "AeroTokmok";
+      uiSub.innerText = "Нажми, чтобы взлететь";
+      uiTitle.style.display = 'block';
+      uiSub.style.display = 'block';
+    }
+
+    // Главный цикл
+    function loop() {
+      // Очистка
+      ctx.clearRect(0, 0, width, height);
+
+      if(gameState === 'PLAY') {
+        pipes.update();
+        pipes.draw();
+        plane.update();
+        plane.draw();
+        frames++;
+      } else if (gameState === 'START') {
+        plane.y = height / 2 + Math.sin(Date.now()/300)*10; // Анимация покачивания
+        plane.draw();
+      } else if (gameState === 'GAMEOVER') {
+        pipes.draw();
+        plane.draw();
+      }
+      
+      requestAnimationFrame(loop);
+    }
+
+    // Управление
+    function inputAction() {
+      if(gameState === 'START') {
+        gameState = 'PLAY';
+        uiTitle.style.display = 'none';
+        uiSub.style.display = 'none';
+        plane.flap();
+      } else if(gameState === 'PLAY') {
+        plane.flap();
+      } else if(gameState === 'GAMEOVER') {
+        resetGame();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if(e.code === 'Space') inputAction();
+    });
+    window.addEventListener('touchstart', (e) => {
+      e.preventDefault(); // чтобы не скроллило
+      inputAction();
+    }, {passive: false});
+    window.addEventListener('mousedown', inputAction);
+
+    // Ресайз окна
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      plane.y = height / 2;
+    }
+    window.addEventListener('resize', resize);
+    
+    // Запуск
+    resize();
+    loop();
+
+  </script>
+</body>
+</html>
